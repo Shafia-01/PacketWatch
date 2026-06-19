@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Streamlit config / cache
+.streamlit/
+
+# Project-specific generated outputs & large datasets
+models/original_dataset.csv
+models/sample_dataset1.csv
+models/sample_dataset3.csv
+threat_predictions.csv
