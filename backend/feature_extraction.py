@@ -1,8 +1,24 @@
 import statistics
+import logging
+from scapy.layers.inet import IP
+import socket
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger(__name__)
+
+def get_local_ips():
+    try:
+        hostname = socket.gethostname()
+        return socket.gethostbyname_ex(hostname)[2]
+    except Exception as e:
+        logger.error(f"Error getting local IPs: {e}")
+        return []
 
 def extract_features(packets):
     if not packets:
         return None
+
+    local_ips = get_local_ips()
 
     flow_durations = []
     packet_lengths = []
@@ -23,7 +39,11 @@ def extract_features(packets):
         flow_durations.append(pkt.time - packets[0].time)
         flow_iat.append(pkt.time - packets[i - 1].time)
 
-        if hasattr(pkt, "direction") and pkt.direction == "FWD":
+        is_fwd = False
+        if pkt.haslayer(IP):
+            is_fwd = pkt[IP].src in local_ips
+
+        if is_fwd:
             fwd_iat.append(pkt.time - packets[i - 1].time)
             fwd_packet_lengths.append(len(pkt.payload))
             fwd_packet_count += 1
@@ -43,7 +63,7 @@ def extract_features(packets):
         packet_lengths = [0]
 
     feature_dict = {
-        'Flow Duration': sum(flow_durations) / len(flow_durations) if flow_durations else 0,
+        'Flow Duration': flow_durations[-1] if flow_durations else 0,
         'Bwd Packet Length Max': max(bwd_packet_lengths) if bwd_packet_lengths else 0,
         'Bwd Packet Length Min': min(bwd_packet_lengths) if bwd_packet_lengths else 0,
         'Bwd Packet Length Mean': statistics.mean(bwd_packet_lengths) if bwd_packet_lengths else 0,

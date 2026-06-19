@@ -6,11 +6,15 @@ import os
 import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from backend.utils import preprocess_input, make_prediction
+from backend.utils import preprocess_dataframe, make_prediction, model, scaler, imputer
 from backend.realtime_detector import sniff_packets_and_detect
 
 st.set_page_config(page_title="AI Cybersecurity Threat Detector", layout="wide")
 st.title("🛡️ AI-Enhanced Cybersecurity Threat Detector")
+
+if any(x is None for x in [model, scaler, imputer]):
+    st.error("❌ Model files not found. Please ensure all .pkl files exist in /models.")
+    st.stop()
 
 tab1, tab2 = st.tabs(["📁 Analyze Saved Network Logs", "🌐 Live Wi-Fi Threat Monitor"])
 
@@ -21,19 +25,25 @@ with tab1:
 
     if uploaded_file is not None:
         try:
-            uploaded_file.seek(0)
             original_df = pd.read_csv(uploaded_file)
             original_df = original_df.head(100)
-        except Exception as e:
+        except Exception:
             st.error("Unable to read the uploaded CSV file.")
             st.stop()
         
-        uploaded_file.seek(0)
-        processed_data = preprocess_input(uploaded_file)
-        
-        if processed_data is not None:
-            processed_data = processed_data[:100]
+        if original_df.empty:
+            st.error("Uploaded file is empty.")
+            st.stop()
 
+        try:
+            processed_data = preprocess_dataframe(original_df)
+        except ValueError as ve:
+            st.error(f"❌ Validation Error: {ve}")
+            st.stop()
+        except Exception as e:
+            st.error(f"❌ Preprocessing Error: {e}")
+            st.stop()
+        
         if processed_data is None:
             st.error("Uploaded file is invalid or missing required features.")
         else:
@@ -73,12 +83,21 @@ with tab2:
                 st.subheader("📡 Active Network Interface")
                 st.write(f"**Interface**: {summary['Interface']}")
                 wifi_info = summary.get("Wi-Fi Info", {})
-                st.write(f"**SSID**: {wifi_info.get('SSID', 'N/A')}")
-                st.write(f"**Protocol**: {wifi_info.get('Protocol', 'N/A')}")
-                st.write(f"**Description**: {wifi_info.get('Description', 'N/A')}")
-                st.write(f"**Network Band (Channel)**: {wifi_info.get('Network Band (Channel)', 'N/A')}")
+                if isinstance(wifi_info, dict) and "error" in wifi_info:
+                    st.error(f"Wi-Fi Info Error: {wifi_info['error']}")
+                else:
+                    st.write(f"**SSID**: {wifi_info.get('SSID', 'N/A') if wifi_info else 'N/A'}")
+                    st.write(f"**Protocol**: {wifi_info.get('Protocol', 'N/A') if wifi_info else 'N/A'}")
+                    st.write(f"**Description**: {wifi_info.get('Description', 'N/A') if wifi_info else 'N/A'}")
+                    st.write(f"**Network Band (Channel)**: {wifi_info.get('Network Band (Channel)', 'N/A') if wifi_info else 'N/A'}")
                 st.write(f"**Packets Captured**: {summary['Packets Captured']}")
 
             st.subheader("🛡️ Detection Result")
-            st.success(result if "Normal" in result else result)
-
+            if summary and summary.get("Status") == "SCAN_FAILED":
+                st.warning(result)
+            elif "❌" in result:
+                st.error(result)
+            elif "Threat" in result:
+                st.error(result)
+            else:
+                st.success(result)
