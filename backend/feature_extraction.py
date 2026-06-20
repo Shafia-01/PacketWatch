@@ -1,6 +1,6 @@
 import statistics
 import logging
-from scapy.layers.inet import IP
+from scapy.layers.inet import IP, TCP, UDP
 import socket
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
@@ -17,6 +17,8 @@ def get_local_ips():
 def extract_features(packets):
     if not packets:
         return None
+
+    logger.warning("Idle features are not computed from packet data. These are placeholder constants. If the model was trained on real idle times, prediction accuracy will be affected.")
 
     local_ips = get_local_ips()
 
@@ -56,8 +58,10 @@ def extract_features(packets):
 
         packet_lengths.append(len(pkt.payload))
 
-        if hasattr(pkt, "dport"):
-            destination_port = pkt.dport
+        if pkt.haslayer(TCP):
+            destination_port = pkt[TCP].dport
+        elif pkt.haslayer(UDP):
+            destination_port = pkt[UDP].dport
 
     if not packet_lengths:
         packet_lengths = [0]
@@ -80,9 +84,12 @@ def extract_features(packets):
         'Packet Length Variance': statistics.variance(packet_lengths) if len(packet_lengths) > 1 else 0,
         'Average Packet Size': statistics.mean(packet_lengths),
         'Avg Bwd Segment Size': statistics.mean(bwd_packet_lengths) if bwd_packet_lengths else 0,
-        'Idle Mean': 50,
-        'Idle Max': 80,
-        'Idle Min': 10,
+        # WARNING: Idle features are not computed from packet data.
+        # These are placeholder constants. If the model was trained on
+        # real idle times, prediction accuracy will be affected.
+        'Idle Mean': 0,
+        'Idle Max': 0,
+        'Idle Min': 0,
         'Destination Port': destination_port,
         'Total Fwd Packets': fwd_packet_count,
         'Total Backward Packets': bwd_packet_count,
