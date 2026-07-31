@@ -1,16 +1,21 @@
-<h1 align="center">🛡️ PacketWatch</h1>
-<h3 align="center">AI-Enhanced Cybersecurity Threat Detector</h3>
+<h1 align="center">PacketWatch</h1>
+<p align="center">AI-Enhanced Cybersecurity Threat Detector</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white" alt="Streamlit" />
-  <img src="https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn" />
-  <img src="https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas" />
-  <img src="https://img.shields.io/badge/Scapy-005C8A?style=for-the-badge" alt="Scapy" />
+  <img src="https://img.shields.io/badge/Python-3.9+-blue.svg?style=flat&logo=python&logoColor=white" alt="Python 3.9+">
+  <img src="https://img.shields.io/badge/Streamlit-%23FF4B4B.svg?style=flat&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=flat&logo=scikit-learn&logoColor=white" alt="scikit-learn">
+  <img src="https://img.shields.io/badge/pandas-%23150458.svg?style=flat&logo=pandas&logoColor=white" alt="Pandas">
+  <img src="https://img.shields.io/badge/NumPy-%23013243.svg?style=flat&logo=numpy&logoColor=white" alt="NumPy">
+  <img src="https://img.shields.io/badge/Scapy-005C8A.svg?style=flat" alt="Scapy">
 </p>
 
-A real-time network security monitoring tool that uses machine learning to classify Wi-Fi traffic as benign or malicious. The application supports two distinct operational modes: **live packet sniffing** (capturing active Wi-Fi traffic) and **offline CSV log analysis** (evaluating historical traffic records).
-
+<div align="center">
+  <h3><a href="https://youtu.be/hAt71wGmWVI"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
+  <p>
+    <i>A real-time network security monitoring tool that uses machine learning to classify Wi-Fi traffic as benign or malicious. The application supports two distinct operational modes: <b>live packet sniffing</b> (capturing active Wi-Fi traffic) and <b>offline CSV log analysis</b> (evaluating historical traffic records).</i>
+  </p>
+</div>
 
 ---
 
@@ -182,12 +187,23 @@ For live packet detection, ensure you launch Streamlit with administrator/root p
   sudo streamlit run frontend/main.py
   ```
 
----
+## 📸 Screenshots
 
-## 📸 Screenshots Section
-*Screenshots of the Streamlit dashboard in both offline analysis and live detection modes. (Add screenshots here)*
+<h3 align="center">1. Offline Analysis Mode</h3>
+<p align="center"><i>The Streamlit dashboard allows users to upload custom CSV logs of network traffic to perform offline batch classification (Normal vs. Threat).</i></p>
+<p align="center">
+  <img src="assets/PacketWatch%20(1).png" alt="Offline Analysis Dashboard 1" width="49%" />
+  <img src="assets/PacketWatch%20(2).png" alt="Offline Analysis Dashboard 2" width="49%" />
+</p>
 
----
+<br>
+
+<h3 align="center">2. Live Packet Sniffing & Detection Mode</h3>
+<p align="center"><i>Real-time network monitoring interface showing active Wi-Fi traffic sniffing and the classifier's security verdict.</i></p>
+<p align="center">
+  <img src="assets/PacketWatch%20(3).png" alt="Live Sniffing & Detection" width="49%" />
+  <img src="assets/PacketWatch%20(4).png" alt="Live Sniffing & Detection" width="49%" />
+</p>
 
 ## ⚡ Performance Considerations
 - **O(n) Feature Extraction**: Feature extraction scales linearly with the number of captured packets, keeping CPU usage minimal.
@@ -207,7 +223,3 @@ For live packet detection, ensure you launch Streamlit with administrator/root p
 - **Feature Alignment**: Successfully mapped raw Scapy packet attributes (which are individual frame-level representations) to the flow-level statistical features (e.g., standard deviation, means, segment counts) expected by the ML model.
 - **Sparse Data Handling**: Computed valid statistics (such as standard deviation and variance) on variable-length captures, gracefully handling cases with very low packet counts without triggering division-by-zero or empty sequence errors.
 
----
-
-## 📄 License
-This project is licensed under the MIT License.
