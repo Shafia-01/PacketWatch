@@ -11,7 +11,7 @@
 </p>
 
 <div align="center">
-<p>
+  <p>
     <i>A real-time network security monitoring tool that uses machine learning to classify Wi-Fi traffic as benign or malicious. The application supports two distinct operational modes: <b>live packet sniffing</b> (capturing active Wi-Fi traffic) and <b>offline CSV log analysis</b> (evaluating historical traffic records).</i>
   </p>
 
