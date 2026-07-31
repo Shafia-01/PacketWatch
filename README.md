@@ -146,7 +146,7 @@ PacketWatch/
 
 ## ⚙️ Installation Guide
 
-### 1. Install Prerequisites
+### 📦 1. Install Prerequisites
 You must install packet capture driver libraries depending on your Operating System:
 
 - **Windows**: Install **[Npcap](https://npcap.com/)** (ensure you check the box to install Npcap in "WinPcap API-compatible mode" during installation).
@@ -159,7 +159,7 @@ You must install packet capture driver libraries depending on your Operating Sys
   brew install libpcap
   ```
 
-### 2. Install Python Dependencies
+### 🐍 2. Install Python Dependencies
 Clone the repository and install the required libraries:
 ```bash
 # Clone the repository
@@ -195,7 +195,7 @@ For live packet detection, ensure you launch Streamlit with administrator/root p
 
 ## 📸 Screenshots
 
-<h3 align="center">1. Offline Analysis Mode</h3>
+<h3 align="center">📂 1. Offline Analysis Mode</h3>
 <p align="center"><i>The Streamlit dashboard allows users to upload custom CSV logs of network traffic to perform offline batch classification (Normal vs. Threat).</i></p>
 <p align="center">
   <img src="assets/PacketWatch%20(1).png" alt="Offline Analysis Dashboard 1" width="49%" />
@@ -204,7 +204,7 @@ For live packet detection, ensure you launch Streamlit with administrator/root p
 
 <br>
 
-<h3 align="center">2. Live Packet Sniffing & Detection Mode</h3>
+<h3 align="center">📡 2. Live Packet Sniffing & Detection Mode</h3>
 <p align="center"><i>Real-time network monitoring interface showing active Wi-Fi traffic sniffing and the classifier's security verdict.</i></p>
 <p align="center">
   <img src="assets/PacketWatch%20(3).png" alt="Live Sniffing & Detection" width="49%" />
