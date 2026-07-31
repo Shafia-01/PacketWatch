@@ -11,9 +11,13 @@
 </p>
 
 <div align="center">
+<p>
+    <i>A real-time network security monitoring tool that uses machine learning to classify Wi-Fi traffic as benign or malicious. The application supports two distinct operational modes: <b>live packet sniffing</b> (capturing active Wi-Fi traffic) and <b>offline CSV log analysis</b> (evaluating historical traffic records).</i>
+  </p>
+
   <h3><a href="https://youtu.be/hAt71wGmWVI"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
   <p>
-    <i>A real-time network security monitoring tool that uses machine learning to classify Wi-Fi traffic as benign or malicious. The application supports two distinct operational modes: <b>live packet sniffing</b> (capturing active Wi-Fi traffic) and <b>offline CSV log analysis</b> (evaluating historical traffic records).</i>
+    The demo link above features a video walkthrough demonstrating PacketWatch's real-time packet sniffing pipeline, machine learning-based traffic classification, automated feature extraction, and the interactive Streamlit dashboard showcasing live detection metrics and threat alerts.
   </p>
 </div>
 
