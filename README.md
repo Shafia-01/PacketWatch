@@ -191,6 +191,8 @@ For live packet detection, ensure you launch Streamlit with administrator/root p
   sudo streamlit run frontend/main.py
   ```
 
+---
+
 ## 📸 Screenshots
 
 <h3 align="center">1. Offline Analysis Mode</h3>
@@ -208,6 +210,8 @@ For live packet detection, ensure you launch Streamlit with administrator/root p
   <img src="assets/PacketWatch%20(3).png" alt="Live Sniffing & Detection" width="49%" />
   <img src="assets/PacketWatch%20(4).png" alt="Live Sniffing & Detection" width="49%" />
 </p>
+
+---
 
 ## ⚡ Performance Considerations
 - **O(n) Feature Extraction**: Feature extraction scales linearly with the number of captured packets, keeping CPU usage minimal.
